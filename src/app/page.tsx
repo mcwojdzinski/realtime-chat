@@ -1,9 +1,8 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import {db} from "@/lib/db";
 
-const inter = Inter({ subsets: ['latin'] })
+const Home = async () => {
 
-const Home = () => {
+  await db.set('hello', 'hello')
   return (
    <h1 className="text-red-600">Hello world</h1>
   )
