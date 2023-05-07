@@ -32,7 +32,6 @@ const sidebarOptions: SidebarOption[] = [
 const Layout = async ({ children }: LayoutProps) => {
   const session = await getServerSession(authOptions)
   if (!session) notFound()
-
   const friends = await getFriendsByUserId(session.user.id)
 
   const unseenRequestCount = (

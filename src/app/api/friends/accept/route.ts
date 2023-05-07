@@ -45,6 +45,8 @@ export async function POST(req: Request) {
     const user = JSON.parse(userRaw) as User
     const friend = JSON.parse(friendRaw) as User
 
+    await db.sadd(`user:${session.user.id}:friends`, idToAdd)
+    await db.sadd(`user:${idToAdd}:friends`, session.user.id)
     await db.srem(`user:${session.user.id}:incoming_friend_requests`, idToAdd)
 
     return new Response('OK')
