@@ -7,6 +7,7 @@ import { fetchRedis } from '@/helpers/redis'
 import { messageArrayValidator } from '@/lib/validations/message'
 import Image from 'next/image'
 import Messages from '@/components/Messages'
+import ChatInput from '@/components/ChatInput'
 
 interface PageProps {
   params: {
@@ -77,7 +78,8 @@ const Page = async ({ params }: PageProps) => {
         </div>
       </div>
 
-      <Messages />
+      <Messages initialMessages={initialMessages} sessionId={session.user.id} />
+      <ChatInput chatPartner={chatPartner} chatId={chatId} />
     </div>
   )
 }
