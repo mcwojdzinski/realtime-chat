@@ -5,6 +5,8 @@ import { db } from '@/lib/db'
 import { timestamp } from 'yaml/dist/schema/yaml-1.1/timestamp'
 import { Message, messageValidator } from '@/lib/validations/message'
 import { nanoid } from 'nanoid'
+import { pusherServer } from '@/lib/pusher'
+import { toPusherKey } from '@/lib/utils'
 
 export async function POST(req: Request) {
   try {
@@ -47,6 +49,12 @@ export async function POST(req: Request) {
     }
 
     const message = messageValidator.parse(messageData)
+
+    await pusherServer.trigger(
+      toPusherKey(`chat:${chatId}`),
+      'incoming_message',
+      message
+    )
 
     // all valid, send the message
     await db.zadd(`chat:${chatId}:messages`, {
